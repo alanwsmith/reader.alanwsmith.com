@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 
+import json
 import re
 
 from bs4 import BeautifulSoup
 
 source_path = 'manual.html'
 output_path = 'parsed_1.html'
+output_json = 'output.json'
+
+payload = {
+    "pages": []
+}
+
 
 with open(source_path) as _html:
     file_data = _html.read()
@@ -13,9 +20,21 @@ with open(source_path) as _html:
     new_data = re.sub(r'<div class="header">.*?</div>', '', file_data, flags=re.DOTALL)
     new_data = re.sub(r'<table class="menu".*?</table>', '', new_data, flags=re.DOTALL)
 
+    sections = new_data.split('<hr>')
 
-    with open(output_path, 'w') as _out:
-        _out.write(new_data)
+    for section in sections:
+        matches = re.search(r'<h\d class=".*?">(.*?)</h', section)
+        if matches:
+            slug = re.sub(r'\W', '', matches[1])
+            payload['pages'].append(
+                {
+                    "id": slug,
+                    "content": section
+                }
+            )
+
+    with open(output_json, 'w') as _out:
+        json.dump(payload, _out)
 
 
     # soup = BeautifulSoup(_html, 'html.parser')
