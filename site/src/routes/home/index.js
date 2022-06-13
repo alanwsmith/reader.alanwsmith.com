@@ -50,6 +50,12 @@ function Stuff () {
         setCurrentId(newNumber);
     };
 
+    const previousPage = () => {
+        const newNumber = currentId === 0 ? 0 : currentId - 1;
+        setCookie('currentId', newNumber);
+        setCurrentId(newNumber);
+    };
+
 
     useEffect(() => {
         const cookieCurrentId = getCookie('currentId');
@@ -74,10 +80,13 @@ function Stuff () {
         if (pageData !== null) {
             return (
                     <div>
+                    <button onClick={previousPage}>Previous Page</button>
                     <button onClick={nextPage}>Next Page</button>
                     <div dangerouslySetInnerHTML={{
                         __html: `${pageData.pages[currentId].content}`
                     }} />
+                    <button onClick={previousPage}>Previous Page</button>
+                    <button onClick={nextPage}>Next Page</button>
                 </div>
             )
                 ;
