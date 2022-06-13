@@ -16,15 +16,14 @@ const Home = () => {
 
 export default Home;
 
-
-
 function setCookie(name, value) {
     document.cookie = `${name}=${encodeURIComponent(value)};max-age=31536000`;
 }
 
 function getCookie(name) {
     const cookies = document.cookie.split('; ');
-    if (cookies.length > 1) {
+    console.log(cookies);
+    if (cookies.length > 0) {
         const cookieRow = cookies
               .find(row => row.startsWith(`${name}=`));
         if (cookieRow !== undefined) {
@@ -45,15 +44,23 @@ function Stuff () {
     const [pageData, setPageData] = useState(null);
     const [currentId, setCurrentId] = useState(null);
 
+    const nextPage = () => {
+        const newNumber = currentId + 1;
+        setCookie('currentId', newNumber);
+        setCurrentId(newNumber);
+    };
+
+
     useEffect(() => {
         const cookieCurrentId = getCookie('currentId');
+        console.log(cookieCurrentId);
         if (cookieCurrentId === null) {
             setCookie('currentId', '0');
             setCurrentId(0);
         } else {
             setCurrentId(parseInt(cookieCurrentId));
         }
-    });
+    }, []);
 
     useEffect(() =>{
         fetch('/assets/data/org-mode-manual.json')
@@ -65,9 +72,15 @@ function Stuff () {
 
     if (currentId !== null) {
         if (pageData !== null) {
-            return <div dangerouslySetInnerHTML={{
-                __html: `${pageData.pages[currentId].content}`
-            }} />;
+            return (
+                    <div>
+                    <button onClick={nextPage}>Next Page</button>
+                    <div dangerouslySetInnerHTML={{
+                        __html: `${pageData.pages[currentId].content}`
+                    }} />
+                </div>
+            )
+                ;
         } else {
             return <div>not yet loaded</div>;
         }
