@@ -1,0 +1,27 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	background: #333;
+	font-family: 'Helvetica Neue', arial, sans-serif;
+	font-weight: 400;
+	color: #ccc;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: #888;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#app {
+    padding-top:20px;
+    padding-bottom:20px;
+  margin: auto;
+  max-width: 660px;
+}
