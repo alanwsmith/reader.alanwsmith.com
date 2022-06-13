@@ -7,7 +7,6 @@ const Home = () => {
 
     return (
 	          <div class={style.home}>
-		        <h1>Home</h1>
             <Stuff />
 	          </div>
     );
@@ -96,7 +95,6 @@ function Stuff () {
     } else {
         return <div>not yet loaded</div>;
     }
-
 };
 
 
