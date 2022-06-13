@@ -47,12 +47,14 @@ function Stuff () {
         const newNumber = currentId + 1;
         setCookie('currentId', newNumber);
         setCurrentId(newNumber);
+        window.scrollTo({ top: 0, behavoir: 'instant'});
     };
 
     const previousPage = () => {
         const newNumber = currentId === 0 ? 0 : currentId - 1;
         setCookie('currentId', newNumber);
         setCurrentId(newNumber);
+        window.scrollTo({ top: 0, behavoir: 'instant'});
     };
 
 
